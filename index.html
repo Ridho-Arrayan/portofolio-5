@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1A1F2C;
+            color: #D6BCFA;
+            line-height: 1.6;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 31, 44, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #D6BCFA;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .nav-links a {
+            color: rgba(214, 188, 250, 0.8);
+            text-decoration: none;
+            margin-left: 2rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #8B5CF6;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8B5CF6;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(26, 31, 44, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: #D6BCFA;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #D6BCFA;
+            background: none;
+            border: none;
+        }
+
+        /* Home section styles */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 1rem 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .neon-logo {
+            width: 128px;
+            height: 128px;
+            border: 4px solid #8B5CF6;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            position: relative;
+            box-shadow: 0 0 20px #8B5CF6,
+                       inset 0 0 20px #8B5CF6;
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        .neon-logo span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Typing animation styles */
+        .typing-text {
+            font-size: 1.25rem;
+            color: rgba(214, 188, 250, 0.9);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #8B5CF6;
+            width: 0;
+            animation: typing 3s steps(40, end),
+                       blink-caret 0.75s step-end infinite,
+                       deleteTyping 2s steps(40, end) 3s,
+                       typing 3s steps(40, end) 5s,
+                       deleteTyping 2s steps(40, end) 8s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes deleteTyping {
+            from { width: 100% }
+            to { width: 0 }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #8B5CF6 }
+        }
+
+        /* Enhanced animations */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 20px #8B5CF6,
+                           inset 0 0 20px #8B5CF6;
+            }
+            50% {
+                box-shadow: 0 0 30px #8B5CF6,
+                           inset 0 0 30px #8B5CF6;
+            }
+            100% {
+                box-shadow: 0 0 20px #8B5CF6,
+                           inset 0 0 20px #8B5CF6;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* About section styles */
+        #about {
+            padding: 6rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            opacity: 0;
+        }
+
+        .about-grid.animate {
+            animation: slideInRight 1s ease-out forwards;
+        }
+
+        .about-image {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .what-i-do {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            color: #8B5CF6;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+        }
+
+        /* Projects section styles */
+        #projects {
+            padding: 6rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .projects-grid {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        .project-card.animate {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .learn-more {
+            color: #8B5CF6;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .learn-more:hover {
+            color: #9B8AFB;
+        }
+
+        /* Contact section styles */
+        #contact {
+            padding: 6rem 1rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            color: #D6BCFA;
+            font-size: 1.5rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-icon:hover {
+            color: #8B5CF6;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes neonRotate {
+            from {
+                transform: rotate(0deg);
+                filter: hue-rotate(0deg) brightness(150%);
+            }
+            to {
+                transform: rotate(360deg);
+                filter: hue-rotate(360deg) brightness(150%);
+            }
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#home" class="logo">Portfolio</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home" onclick="toggleMenu()">Home</a>
+            <a href="#about" onclick="toggleMenu()">About</a>
+            <a href="#skills" onclick="toggleMenu()">Skills</a>
+            <a href="#projects" onclick="toggleMenu()">Projects</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div>
+            <div class="neon-logo">
+                <span>RA</span>
+            </div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Ridho Arrayan</h1>
+            <div class="typing-text">Frontend Developer & UI/UX Designer</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-grid">
+            <div>
+                <img src="https://via.placeholder.com/400x500" alt="Profile" class="about-image">
+            </div>
+            <div>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">About Me</h2>
+                <p style="color: rgba(214, 188, 250, 0.8); margin-bottom: 2rem;">
+                    I'm a passionate frontend developer and UI/UX designer with a keen eye for creating
+                    beautiful and functional web experiences. With years of experience in the field,
+                    I strive to build applications that not only look great but also provide exceptional
+                    user experience.
+                </p>
+                <div class="what-i-do">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">What I Do</h3>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        I specialize in creating beautiful and functional web experiences. My focus is on combining
+                        aesthetic design with efficient functionality to deliver exceptional user experiences.
+                        Whether it's frontend development or UI/UX design, I bring creativity and technical expertise
+                        to every project.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">My Skills</h2>
+        <div class="skills-grid" style="max-width: 1200px; margin: 0 auto; padding: 6rem 1rem;">
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                </svg>
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">HTML5</h4>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        Semantic markup and modern HTML features
+                    </p>
+                </div>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 2l2 6h12l2-6"></path>
+                    <path d="M12 12V8"></path>
+                    <path d="M8 12v-2"></path>
+                    <path d="M16 12v-2"></path>
+                    <path d="M20 8H4l2 8h12l2-8z"></path>
+                </svg>
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">CSS3</h4>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        Modern styling and responsive design
+                    </p>
+                </div>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
+                </svg>
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">JavaScript</h4>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        Dynamic and interactive web applications
+                    </p>
+                </div>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                    <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
+                    <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
+                    <line x1="14.83" y1="9.17" x2="18.36" y2="5.64"></line>
+                    <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                </svg>
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">React</h4>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        Building modern user interfaces
+                    </p>
+                </div>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M17 5.5v13M7 5.5v13"></path>
+                </svg>
+                <div>
+                    <h4 style="margin-bottom: 0.5rem;">Python</h4>
+                    <p style="color: rgba(214, 188, 250, 0.8);">
+                        Backend development and automation
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Featured Projects</h2>
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <img src="https://via.placeholder.com/400x300" alt="Project 1" class="project-image">
+                <div class="project-content">
+                    <h3 style="margin-bottom: 0.5rem;">Project 1</h3>
+                    <p style="color: rgba(214, 188, 250, 0.8); margin-bottom: 1rem;">
+                        A beautiful and functional web application built with modern technologies.
+                    </p>
+                    <a href="https://project1.com" target="_blank" class="learn-more">Learn More →</a>
+                </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="project-card">
+                <img src="https://via.placeholder.com/400x300" alt="Project 2" class="project-image">
+                <div class="project-content">
+                    <h3 style="margin-bottom: 0.5rem;">Project 2</h3>
+                    <p style="color: rgba(214, 188, 250, 0.8); margin-bottom: 1rem;">
+                        An innovative solution for modern web challenges.
+                    </p>
+                    <a href="https://project2.com" target="_blank" class="learn-more">Learn More →</a>
+                </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="project-card">
+                <img src="https://via.placeholder.com/400x300" alt="Project 3" class="project-image">
+                <div class="project-content">
+                    <h3 style="margin-bottom: 0.5rem;">Project 3</h3>
+                    <p style="color: rgba(214, 188, 250, 0.8); margin-bottom: 1rem;">
+                        A responsive and user-friendly web platform.
+                    </p>
+                    <a href="https://project3.com" target="_blank" class="learn-more">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Get In Touch</h2>
+        <p style="color: rgba(214, 188, 250, 0.8); margin-bottom: 2rem;">
+            Feel free to reach out for collaborations or just a friendly hello
+        </p>
+        <div class="social-links">
+            <a href="https://github.com/yourusername" target="_blank" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+            </a>
+            <a href="https://tiktok.com/@yourusername" target="_blank" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="https://instagram.com/yourusername" target="_blank" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                </svg>
+            </a>
+            <a href="https://wa.me/yourphonenumber" target="_blank" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const style = window.getComputedStyle(mobileMenu);
+            if (style.display === 'none') {
+                mobileMenu.style.display = 'block';
+            } else {
+                mobileMenu.style.display = 'none';
+            }
+        }
+
+        // Enhanced scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('project-card')) {
+                            entry.target.classList.add('animate');
+                        } else if (entry.target.classList.contains('about-grid')) {
+                            entry.target.classList.add('animate');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // Observe project cards
+            document.querySelectorAll('.project-card').forEach((card) => {
+                observer.observe(card);
+            });
+
+            // Observe about section
+            document.querySelectorAll('.about-grid').forEach((section) => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
